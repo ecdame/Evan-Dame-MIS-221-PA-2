@@ -1,7 +1,5 @@
 Extras added:
-Ability to return to menu from submenu string inputs
-
-Extras to add:
+Ability to return to menu from submenu string input
 Itemized breakdown of bill
 
 
