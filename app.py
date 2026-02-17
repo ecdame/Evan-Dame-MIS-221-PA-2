@@ -49,7 +49,7 @@ def trans_calc():
     if drink_ordered == "return":
         menu()
         return
-
+    
 ##Gets order quantity, validates it, and returns to menu if customer enters "return"
     quantity_ordered = input("Please enter quantity ordered: ")
     quantity_ordered = quant_check(quantity_ordered, "int")
@@ -57,32 +57,40 @@ def trans_calc():
     if quantity_ordered == "return":
         menu()
         return
-
-    match drink_ordered:
-        case "standard drip":
-            total_cost = quantity_ordered * 3
-        case "specialty cold brew":
-            total_cost = quantity_ordered * 6
-    
-    if quantity_ordered >= 10:
-        total_cost = total_cost * .85
-
+##Prompts user for whether or not they'd like a pastry bundle, validates input, and returns to menu if they enter return.
     print("Would you like to Pastry Bundle for $5 extra?")
     bundle = input("Enter yes or no, or return to go back to main menu: ")
     bundle = sel_check(bundle, "yes_no")
-
-    if bundle == "yes":
-        total_cost += 5
-    elif bundle == "return":
+    if bundle == "return":
         menu()
         return
     
-    total_cost = total_cost * 1.1
+##Calculates total bill for user
+    match drink_ordered:
+        case "standard drip":
+            drink_cost = quantity_ordered * 3
+        case "specialty cold brew":
+            drink_cost = quantity_ordered * 6
+    
+    discount = 0
+    if quantity_ordered >= 10:
+        discount = drink_cost * .15
+    
+    bundle_cost = 0
+    if bundle == "yes":
+        bundle_cost = 5
+
+    
+    total_before_tax = drink_cost - discount + bundle_cost
+    tax = 0.1 * total_before_tax
+    total_cost = total_before_tax + tax
+
+    print(f"\nCost breakdown:\n\nDrinks: ${drink_cost:.2f}\nDiscount: -${discount:.2f}\nBundle: ${bundle_cost:.2f}\nBarista Service Tax: ${tax:.2f}")
 
     while total_cost > 0:
-        print(f"Balance remaining: ${total_cost:.2f}")
+        print(f"\nBalance remaining: ${total_cost:.2f}")
 
-        payment = input("Please enter payment, or return to cancel order: $")
+        payment = input("\nPlease enter payment, or return to cancel order: $")
         payment = quant_check(payment, "float")
 
         if payment == "return":
@@ -92,10 +100,9 @@ def trans_calc():
 
         total_cost = round(total_cost - payment, 2)
     
-    print(f"Balance remaining: ${total_cost:.2f}")
-    
     if total_cost < 0:
-        print(f"Change due: ${(total_cost * -1):.2f}")
+        print(f"\nChange due: ${(total_cost * -1):.2f}")
+    print("\nEnjoy your drinks!")
 
 
     menu()
