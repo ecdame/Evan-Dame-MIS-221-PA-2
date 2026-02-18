@@ -1,6 +1,9 @@
 Extras added:
-Ability to return to menu from submenu string input
-Itemized breakdown of bill
+
+•	Ability to return to menu early by entering “return”  in trans_calc() and inv_check() functions.
+•	Itemized breakdown of balance due in trans_calc() function.
+•	Proper handling of partial payments in trans_calc(), allowing user to pay in chunks.
+
 
 
 
