@@ -13,7 +13,9 @@ def menu():
         case "exit":
             print("Have a nice day!")
             return
-        
+
+#inv_check prompts the user for gallons of milk on hand and expected latte demand, then outputs if the store has a surplus, shortage, or exact amount, as well as the amount of surplus or shortage.
+# It also allows the user to return to the start menu if they enter "return".    
 def inv_check():
     print("\n\nInventory Check")
     gals_left = input("\nPlease enter gallons of milk left in fridge or return to go back to main menu: ")
@@ -50,14 +52,14 @@ def trans_calc():
         menu()
         return
     
-##Gets order quantity, validates it, and returns to menu if customer enters "return"
+##Gets order quantity, validates it with quant_check(), and returns to menu if customer enters "return"
     quantity_ordered = input("Please enter quantity ordered: ")
     quantity_ordered = quant_check(quantity_ordered, "int")
     
     if quantity_ordered == "return":
         menu()
         return
-##Prompts user for whether or not they'd like a pastry bundle, validates input, and returns to menu if they enter return.
+##Prompts user for whether or not they'd like a pastry bundle, validates input with sel_check, and returns to menu if they enter return.
     print("Would you like to Pastry Bundle for $5 extra?")
     bundle = input("Enter yes or no, or return to go back to main menu: ")
     bundle = sel_check(bundle, "yes_no")
@@ -65,7 +67,7 @@ def trans_calc():
         menu()
         return
     
-##Calculates total bill for user
+#Calculates total bill for user and displays it in an itemized format
     match drink_ordered:
         case "standard drip":
             drink_cost = quantity_ordered * 3
@@ -80,13 +82,13 @@ def trans_calc():
     if bundle == "yes":
         bundle_cost = 5
 
-    
     total_before_tax = drink_cost - discount + bundle_cost
     tax = 0.1 * total_before_tax
     total_cost = total_before_tax + tax
 
     print(f"\nCost breakdown:\n\nDrinks: ${drink_cost:.2f}\nDiscount: -${discount:.2f}\nBundle: ${bundle_cost:.2f}\nBarista Service Tax: ${tax:.2f}")
 
+#Repeatedly displays balance remaining, takes payment and verifies with quant_check(), allows user to cancel order to return to menu, and displays change if user pays more than total bill
     while total_cost > 0:
         print(f"\nBalance remaining: ${total_cost:.2f}")
 
@@ -108,6 +110,7 @@ def trans_calc():
     menu()
  
 #quant_check ensures that the user enters a proper quantity when prompted. If entry valid, it returns entry. If not, it reprompts user.
+#The function takes 2 variables: entry, and int_or_float. Entry is just the user's entry (always a string in this program), and int_or_float is a string specifying whether the program expects an int or float at that point.
 def quant_check(entry, int_or_float):
 
     entry = entry.lower().strip()
@@ -138,7 +141,7 @@ def quant_check(entry, int_or_float):
                 entry = input("Please enter a valid quantity: ")
                 return quant_check(entry, "float")
             
-##sel_check checks for valid selections in the three selection prompts of this program. If selections are not valid, it reprompts user.
+##sel_check checks for valid selections in the three selection prompts of this program. If selections are not valid, it reprompts user. It takes two inputs, entry, and phase. Entry is just the input to be verified, and phase specifies what set of selections the function should check for
 def sel_check(entry, phase):
     entry = entry.lower().strip()
 
