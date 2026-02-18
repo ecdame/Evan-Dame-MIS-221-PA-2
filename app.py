@@ -1,3 +1,6 @@
+
+#menu() handles initial user input and routes them to the correct function. It also allows user to exit the program.
+#Inputs are validated in menu() using sel_check()
 def menu():
     print("\n\nMain Menu")
     print("Options:\n1: Inventory Check\n2: Transaction Calculator\n3: Exit")
@@ -41,6 +44,10 @@ def inv_check():
 
     menu()
 
+#trans_calc prompts the user for the drink they want to order, validates it with sel_check(), prompts them for the quantity,
+#and validates it with quant_check, and prompts them on whether they want to add a pastry bundle. It then calculates an itemized bill (including tax and discount),
+#and repeatedly takes payment until the bill is paid. It also calculates how much change is owed if the user overpays.
+#Throughout the function, the user has the ability to enter "return" into any field to return to the main menu and cancel the transaction.
 def trans_calc():
     print("\n\nTransaction Calculator")
     print("Drink Options:\n1: Standard Drip\n2: Specialty Cold Brew")
